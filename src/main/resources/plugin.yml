@@ -1,0 +1,5 @@
+name: AstralEnhancing
+main: ${group}.plugin.AstralEnhancing
+version: ${version}
+author: KatanaMajesty
+api-version: 1.17
