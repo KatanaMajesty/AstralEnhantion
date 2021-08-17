@@ -5,21 +5,21 @@ import org.bukkit.Instrument;
 import org.bukkit.Note;
 import org.bukkit.plugin.Plugin;
 
-public class ItAventurineOre extends CustomItem {
+public class ItChiseledEndStoneBricks extends CustomItem {
 
-    public ItAventurineOre(Plugin plugin) {
+    public ItChiseledEndStoneBricks(Plugin plugin) {
         super(plugin);
     }
 
     @Override
     public void init() {
-        setInstrument(Instrument.BANJO);
-        setNote(new Note(1));
+        setInstrument(Instrument.BELL);
+        setNote(new Note(3));
         setPlaceable(true);
         setPlaceSound("block.stone.place");
-        setItemName("Авантюриновая руда");
-        setCustomModelDataID(9600);
-        setNmsName("aventurine_ore");
+        setItemName("Резные эндерняковые кирпичи");
+        setCustomModelDataID(9622);
+        setNmsName("chiseled_end_stone_bricks");
         setLore(null);
     }
 }

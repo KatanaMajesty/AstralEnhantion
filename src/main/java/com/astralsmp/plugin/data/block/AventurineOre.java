@@ -1,6 +1,7 @@
 package com.astralsmp.plugin.data.block;
 
 import com.astralsmp.plugin.data.CustomBlock;
+import com.astralsmp.plugin.data.item.ItAventurine;
 import com.astralsmp.plugin.data.item.ItAventurineOre;
 import org.bukkit.Instrument;
 import org.bukkit.Material;
@@ -21,11 +22,9 @@ public class AventurineOre extends CustomBlock {
         setHardness(3);
         setFortunable(true);
         setSilkTouchable(true);
-//        setSilkDropItem(new com.astralsmp.custom.items.AventurineOre(getPlugin()));
-        setSilkDropItem(null);
+        setSilkDropItem(new ItAventurineOre(getPlugin()));
         setSilkDropCount(1);
-//        setDropItem(new Aventurine(getPlugin()));
-        setDropItem(new ItAventurineOre(getPlugin()));
+        setDropItem(new ItAventurine(getPlugin()));
         setDropCount(5);
         setDefDropItem(null);
         setDefDropCount(0);

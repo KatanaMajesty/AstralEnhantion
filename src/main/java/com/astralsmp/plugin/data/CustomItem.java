@@ -38,7 +38,7 @@ public abstract class CustomItem {
         throw new NullPointerException(String.format("Field of ITEM is Null at %s", getClass().getName()));
     }
 
-    protected CustomItem(Plugin plugin) {
+    public CustomItem(Plugin plugin) {
         this.plugin = plugin;
         init();
         if (itemName == null
@@ -46,6 +46,7 @@ public abstract class CustomItem {
                 | customModelDataID == null
                 | (placeable && placeSound == null)) closeItemCreation();
         createItem();
+        ItemEventHandler.customItems.add(this);
     }
 
     public abstract void init();

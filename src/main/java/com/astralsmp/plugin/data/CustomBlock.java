@@ -7,14 +7,13 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.NoteBlock;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffectType;
 
 import javax.annotation.Nullable;
 import java.util.Random;
-import java.util.function.Consumer;
 
 public abstract class CustomBlock {
 
@@ -52,7 +51,7 @@ public abstract class CustomBlock {
     private String walkSound;
     private String fallSound;
 
-    protected CustomBlock(Plugin plugin) {
+    public CustomBlock(Plugin plugin) {
         this.plugin = plugin;
         init();
         if (instrument == null
@@ -194,6 +193,44 @@ public abstract class CustomBlock {
             }
         }
         return d;
+    }
+
+    double realBreakTime(Player p) {
+        String[] arr = {"pickaxe", "_axe", "shovel", "hoe"};
+        ItemStack it = p.getInventory().getItemInMainHand();
+        Material m = it.getType();
+        String pItem = it.toString().toLowerCase();
+        String requiredItem = this.material == null ? "null" : this.material.toString().toLowerCase();
+        double speedMultiplier = 1;
+        double damage;
+        boolean canHarv = false;
+        boolean isBestTool = false;
+        for (String s : arr) {
+            if (pItem.contains(s) && requiredItem.contains(s)) {
+                canHarv = true;
+                break;
+            }
+        }
+        if (getToolHierarchy(m) >= (material == null ? 0 : getToolHierarchy(material))) isBestTool = true;
+
+        if (isBestTool) {
+            speedMultiplier = getToolSpeed(m);
+            if (!canHarv) speedMultiplier = 1;
+            else if (it.containsEnchantment(Enchantment.DIG_SPEED))
+                speedMultiplier += it.getEnchantmentLevel(Enchantment.DIG_SPEED) ^ 2 + 1;
+        }
+        if (p.hasPotionEffect(PotionEffectType.FAST_DIGGING)) {
+            speedMultiplier *= 1 + (0.2 * p.getPotionEffect(PotionEffectType.FAST_DIGGING).getAmplifier());
+        }
+        if (p.getLocation().getBlock().getType() == Material.WATER && !p.hasPotionEffect(PotionEffectType.WATER_BREATHING)) {
+            speedMultiplier /= 5;
+        }
+        damage = speedMultiplier / hardness;
+        if (canHarv) damage /= 30;
+        else damage /= 100;
+        if (damage > 1) return 0;
+        double ticks = 1 / damage;
+        return ticks / 20;
     }
 
     /*

@@ -5,21 +5,21 @@ import org.bukkit.Instrument;
 import org.bukkit.Note;
 import org.bukkit.plugin.Plugin;
 
-public class ItAventurineOre extends CustomItem {
+public class ItEndSoil extends CustomItem {
 
-    public ItAventurineOre(Plugin plugin) {
+    public ItEndSoil(Plugin plugin) {
         super(plugin);
     }
 
     @Override
     public void init() {
-        setInstrument(Instrument.BANJO);
+        setInstrument(Instrument.BELL);
         setNote(new Note(1));
         setPlaceable(true);
-        setPlaceSound("block.stone.place");
-        setItemName("Авантюриновая руда");
-        setCustomModelDataID(9600);
-        setNmsName("aventurine_ore");
+        setNmsName("end_soil");
+        setItemName("Почва Края");
+        setPlaceSound("block.dripstone_block.place");
         setLore(null);
+        setCustomModelDataID(9620);
     }
 }
